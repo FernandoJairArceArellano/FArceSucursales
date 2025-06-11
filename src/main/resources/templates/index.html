@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultra.net.nz/thyemeleaf/layout"
+    layout:decorate=~{layout}>
+
+<head>
+    <title>Index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body layout:fragment="body">
+    <div class="container table-container">
+        <h4>Bienvenido</h4>
+        <div class="container">
+            <button class="btn">Agregar una nueva empresa</button>
+
+        </div>
+
+        <div class="table-responsive">
+            <div class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="min-width: auto;">Nombre</th>
+                        <th style="min-width: auto;">Razon Social</th>
+                        <th style="min-width: auto;">RFC</th>
+                        <th style="min-width: auto;">Telefono</th>
+                        <th style="min-width: auto;">Correo Electronico</th>
+                        <th style="min-width: auto;">Pagina Web</th>
+                        <th style="min-width: auto;">Fecha de constitucion</th>
+                        <th style="min-width: auto;">Giro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="listadoEMpresa : ${empresas}">
+                        <td class="align-middle" th:text="${empresas.nombre}"></td>
+                        <td class="align-middle" th:text="${empresas.razonSocial}"></td>
+                        <td class="align-middle" th:text="${empresas.RFC}"></td>
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
