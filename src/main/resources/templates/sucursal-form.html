@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Formulario Sucursal</title>
+    </head>
+    <body>
+
+        <h1>Nueva Sucursal</h1>
+
+        <form th:action="@{/sucursales/save}" th:object="${sucursal}" method="post">
+
+            <input type="hidden" th:field="*{idSucursal}" />
+            <input type="hidden" th:field="*{empresa.idEmpresa}" />
+
+            <label>Nombre:</label>
+            <input type="text" th:field="*{nombre}" /><br/>
+
+            <label>Dirección:</label>
+            <input type="text" th:field="*{direccion}" /><br/>
+
+            <button type="submit">Guardar</button>
+        </form>
+
+    </body>
+</html>

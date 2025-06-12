@@ -1,49 +1,61 @@
 package com.Digis01.FArceSucursales.JPA;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "EMPRESA")
 public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdEmpresa")
-    private int idEmpresa;
+    @Column(name = "IDEMPRESA")
+    private Long idEmpresa;
 
-    @Column(name = "Nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
 
-    @Column(name = "RazonSocial")
+    @Column(name = "RAZONSOCIAL")  // <-- Cambiado aquí
     private String razonSocial;
 
     @Column(name = "RFC")
-    private String RFC;
+    private String rfc;
 
-    @Column(name = "Telefono")
+    @Column(name = "TELEFONO")
     private String telefono;
 
-    @Column(name = "CorreoElectronico")
+    @Column(name = "CORREOELECTRONICO")
     private String correoElectronico;
 
-    @Column(name = "PaginaWeb")
+    @Column(name = "PAGINAWEB")
     private String paginaWeb;
 
-    @Column(name = "Fecha_constitucion")
+    @Column(name = "FECHA_CONSTITUCION")
     private Date fechaConstitucion;
 
-    @Column(name = "Giro")
+    @Column(name = "GIRO")
     private String giro;
 
-    public int getIdEmpresa() {
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sucursal> sucursales = new ArrayList<>();
+
+    public Long getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
+    public void setIdEmpresa(Long idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
@@ -63,12 +75,12 @@ public class Empresa {
         this.razonSocial = razonSocial;
     }
 
-    public String getRFC() {
-        return RFC;
+    public String getRfc() {
+        return rfc;
     }
 
-    public void setRFC(String RFC) {
-        this.RFC = RFC;
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
     public String getTelefono() {
@@ -109,6 +121,14 @@ public class Empresa {
 
     public void setGiro(String giro) {
         this.giro = giro;
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
     }
 
 }

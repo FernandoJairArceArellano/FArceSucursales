@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      lang="en"
+      layout:decorate="layout">
+
+    <body>
+        <div layout:fragment="content">
+
+            <h1>Empresas</h1>
+            <a class="btn btn-primary mb-3" th:href="@{/empresas/form}">Agregar Empresa</a>
+
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Registro</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empresa : ${empresas}">
+                        <td th:text="${empresa.idEmpresa}"></td>
+                        <td th:text="${empresa.nombre}"></td>
+                        <td th:text="${#dates.format(empresa.fechaConstitucion, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <a th:href="@{/empresas/form/{id}(id=${empresa.idEmpresa})}" class="btn btn-sm btn-warning">Editar</a>
+                            <a th:href="@{/sucursales/empresa/{id}(id=${empresa.idEmpresa})}" class="btn btn-sm btn-info">Sucursales</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </body>
+</html>

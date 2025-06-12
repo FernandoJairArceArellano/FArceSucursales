@@ -1,51 +1,45 @@
 package com.Digis01.FArceSucursales.Controller;
 
-import com.Digis01.FArceSucursales.DAO.IEmpresaDAO;
 import com.Digis01.FArceSucursales.JPA.Empresa;
 import com.Digis01.FArceSucursales.JPA.Result;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.Digis01.FArceSucursales.Service.EmpresaService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/empresas")
+@Controller
+@RequestMapping("/empresas")
 public class EmpresaController {
 
-    @Autowired
-    private IEmpresaDAO empresaDAO;
+    private final EmpresaService empresaService;
+
+    public EmpresaController(EmpresaService empresaService) {
+        this.empresaService = empresaService;
+    }
 
     @GetMapping
-    public ResponseEntity<?> getAllEmpresas() {
-        Result result = empresaDAO.GetAllEmpresa();
-        if (result.correct) {
-            return ResponseEntity.ok(result.objects);
-        } else {
-            return ResponseEntity.badRequest().body(result.errorMessage);
-        }
+    public String listEmpresas(Model model) {
+        Result<Empresa> result = empresaService.getAll();
+        model.addAttribute("empresas", result.objects);
+        return "empresas";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getEmpresaById(@PathVariable int id) {
-        Result result = empresaDAO.GetById(id);
-        if (result.correct) {
-            return ResponseEntity.ok(result.object);
-        } else {
-            return ResponseEntity.badRequest().body(result.errorMessage);
-        }
+    @GetMapping("/form")
+    public String formEmpresa(@RequestParam(value = "id", required = false) Long id, Model model) {
+        Empresa empresa = (id != null) ? empresaService.getById(id).object : new Empresa();
+        model.addAttribute("empresa", empresa);
+        return "empresa-form";
     }
 
-    @PostMapping
-    public ResponseEntity<?> addEmpresa(@RequestBody Empresa empresa) {
-        Result result = empresaDAO.AddEmpresa(empresa);
-        if (result.correct) {
-            return ResponseEntity.ok("Empresa agregada correctamente.");
-        } else {
-            return ResponseEntity.badRequest().body(result.errorMessage);
-        }
+    @PostMapping("/save")
+    public String saveEmpresa(@ModelAttribute Empresa empresa) {
+        empresaService.save(empresa);
+        return "redirect:/empresas";
+    }
+
+    @GetMapping("/delete")
+    public String deleteEmpresa(@RequestParam("id") Long id) {
+        empresaService.delete(id);
+        return "redirect:/empresas";
     }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      lang="en"
+      layout:decorate="layout">
+    <head>
+        <title>Empresa - Formulario</title>
+    </head>
+
+    <body layout:fragment="body">
+        <div class="container mt-4">
+            <h2 th:text="${empresa.idEmpresa == null ? 'Agregar Empresa' : 'Editar Empresa'}"></h2>
+
+            <form th:action="@{/empresas/guardar}" th:object="${empresa}" method="post">
+                <input type="hidden" th:field="*{idEmpresa}" />
+
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="fechaRegistro" class="form-label">Fecha de Registro:</label>
+                    <input type="date" id="fechaRegistro" th:field="*{fechaRegistro}" class="form-control" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/empresas}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </body>
+</html>

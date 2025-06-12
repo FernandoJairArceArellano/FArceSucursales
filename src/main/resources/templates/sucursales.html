@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      lang="en"
+      layout:decorate="layout">
+
+    <body>
+        <div layout:fragment="content">
+
+            <h1>Sucursales</h1>
+            <a class="btn btn-primary mb-3" th:href="@{/sucursales/form/{idEmpresa}(idEmpresa=${empresaId})}">Agregar Sucursal</a>
+
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sucursal : ${sucursales}">
+                        <td th:text="${sucursal.idSucursal}"></td>
+                        <td th:text="${sucursal.nombre}"></td>
+                        <td th:text="${sucursal.direccion}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a class="btn btn-secondary" th:href="@{/empresas}">Volver a Empresas</a>
+
+        </div>
+    </body>
+</html>

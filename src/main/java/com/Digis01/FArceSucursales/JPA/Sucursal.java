@@ -7,47 +7,40 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
+@Table(name = "Sucursal")
 public class Sucursal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdSucursal")
-    private int idSucursal;
+    private Long id;
 
-    @Column(name = "Nombre")
     private String nombre;
-
-    @Column(name = "Direccion")
     private String direccion;
-
-    @Column(name = "Telefono")
     private String telefono;
-
-    @Column(name = "CorreoElectronico")
     private String correoElectronico;
-
-    @Column(name = "HorarioApertura")
+    @Temporal(TemporalType.TIME)
     private Date horarioApertura;
-
-    @Column(name = "HorarioCierre")
+    @Temporal(TemporalType.TIME)
     private Date horarioCierre;
-
-    @Column(name = "Responsable")
     private String responsable;
 
     @ManyToOne
     @JoinColumn(name = "EmpresaId")
     private Empresa empresa;
 
-    public int getIdSucursal() {
-        return idSucursal;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdSucursal(int idSucursal) {
-        this.idSucursal = idSucursal;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
